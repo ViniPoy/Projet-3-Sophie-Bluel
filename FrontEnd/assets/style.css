@@ -131,28 +131,27 @@ li:hover {
 	padding: 20px;
 	margin-bottom: 30px;
 	display: flex;
-	align-content: center;
 	justify-content: center;
 	gap: 15px;
 }
 
-.btn-trier {
+.btn-filtrer {
 	background-color: white;
 	padding: 5px 10px;
 	border: 1px solid #1D6154;
 	border-radius: 20px;
 	font-family: 'Syne';
-	font-size: large;
+	font-size: 18px;
 	color: #1D6154;
 	min-width: 100px;
 }
 
-.btn-trier:hover {
+.btn-filtrer:hover {
 	background-color: #1D6154;
 	color: white;
 }
 
-.btn-trier:focus {
+.btn-filtrer:focus {
 	background-color: #1D6154;
 	color: white;
 }
