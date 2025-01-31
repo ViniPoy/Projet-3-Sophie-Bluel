@@ -125,6 +125,39 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* Ajout de css pour les bouton de tri */
+.filtres {
+	padding: 20px;
+	margin-bottom: 30px;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	gap: 15px;
+}
+
+.btn-trier {
+	background-color: white;
+	padding: 5px 10px;
+	border: 1px solid #1D6154;
+	border-radius: 20px;
+	font-family: 'Syne';
+	font-size: large;
+	color: #1D6154;
+	min-width: 100px;
+}
+
+.btn-trier:hover {
+	background-color: #1D6154;
+	color: white;
+}
+
+.btn-trier:focus {
+	background-color: #1D6154;
+	color: white;
+}
+/*Fin de l'ajout*/
+
 .gallery {
 	width: 100%;
 	display: grid;
