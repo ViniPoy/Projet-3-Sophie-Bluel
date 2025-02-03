@@ -73,3 +73,10 @@ boutonHotels.addEventListener("click", function () {
     divGallery.innerHTML = "";
     genererFigure(worksFiltres);
 })
+
+
+// Création de l'évènement qui emmènera sur la page de connexion au moment du ckique sur le le "login" de la barre de navigation.
+const boutonLogin = document.getElementById("login");
+boutonLogin.addEventListener("click", () => {
+    window.location.href = "login.html";
+})
