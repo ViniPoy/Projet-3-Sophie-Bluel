@@ -24,9 +24,7 @@ function genererFigure(works) {
 genererFigure(works);
 
 
-//Récupération de la section dans laquelle implémenter mes filtres
-const sectionPortfolio = document.getElementById("portfolio");
-//Création de la <div class="filtres"
+//Création de la <div class="filtres">
 const divFiltres = document.createElement("div");
 divFiltres.classList.add("filtres");
 //Attachement de la div à la section avant la gallery
@@ -75,8 +73,24 @@ boutonHotels.addEventListener("click", function () {
 })
 
 
-// Création de l'évènement qui emmènera sur la page de connexion au moment du ckique sur le le "login" de la barre de navigation.
+// Création de l'évènement qui emmènera sur la page de connexion au moment du clique sur le le "login" de la barre de navigation.
 const boutonLogin = document.getElementById("login");
 boutonLogin.addEventListener("click", () => {
     window.location.href = "login.html";
 })
+
+
+const token = localStorage.getItem("userToken");
+
+if (token) {
+    console.log("Utilisateur connecté, affichage des options admin.");
+    boutonLogin.innerText = "logout";
+    boutonLogin.addEventListener("click", () => {
+        window.location.href = "index.html";
+        localStorage.removeItem("userToken"); 
+    })
+    divFiltres.innerHTML = "";
+    
+} else {
+    console.log("Utilisateur non connecté, mode visiteur.");
+}
