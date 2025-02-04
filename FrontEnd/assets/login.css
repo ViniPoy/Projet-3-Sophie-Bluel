@@ -50,6 +50,7 @@ table {
 /** end reset css**/
 body {
 	max-width: 1140px;
+    margin: auto;
     margin-bottom: 0;
     padding: 0;
 	font-family: 'Work Sans' ;
@@ -97,9 +98,12 @@ nav li {
 	font-size: 1.2em;
 }
 
+#btn-log {
+    font-weight: bold;
+}
+
 li:hover {
 	color: #B1663C;
-    cursor: pointer;
 }
 
 #login {
@@ -148,6 +152,15 @@ input[type="submit"]:hover {
     cursor: pointer;
 }
 
+#error-message {
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+    font-family: 'Syne';
+    font-weight: bold;
+    font-size: large;
+}
+
 #login a {
     display: flex;
     justify-content: center;
@@ -160,7 +173,7 @@ input[type="submit"]:hover {
 }
 
 footer {
-    margin-top: 20%;
+    margin-top: 150px;
     margin-bottom: 0;
     padding: 20px;
     background-color: white;
