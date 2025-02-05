@@ -53,6 +53,16 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+
+/**Création du bandeau noir signifiant le mod édition**/
+.mode-edition {
+	text-align: center;
+	padding: 15px;
+	background-color: black;
+	color: white;
+	font-weight: lighter;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -95,6 +105,10 @@ nav li {
 	font-size: 1.2em;
 }
 
+nav li img {
+	height: 17px;
+}
+
 li:hover {
 	color: #B1663C;
 }
@@ -130,6 +144,23 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+/* Mise en page du titre et du lien de la modale du mode admin*/
+.entete {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	gap: 20px;
+}
+
+.entete a {
+	color: black;
+	text-decoration: none;
+}
+
+.entete a:hover {
+	text-decoration: underline;
+} 
 
 /* Ajout de css pour les bouton de tri */
 .filtres {
