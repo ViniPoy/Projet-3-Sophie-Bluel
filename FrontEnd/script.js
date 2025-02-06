@@ -1,7 +1,8 @@
-// Récupération des données works da l'API
+// Récupération des données works et categories da l'API
 const reponseWorks = await fetch("http://localhost:5678/api/works");
 const works = await reponseWorks.json();
-
+const reponseCategories = await fetch("http://localhost:5678/api/categories");
+const categories = await reponseCategories.json();
 
 //Récupération de la div dans laquelle implémenter les <figure>
 const divGallery = document.querySelector(".gallery");
@@ -20,7 +21,7 @@ function genererFigure(works) {
         figureElement.appendChild(figcaptionElement);
     });
 }
-//Appel de la fonction
+//Appel de la fonction 
 genererFigure(works);
 
 
@@ -29,48 +30,31 @@ const divFiltres = document.createElement("div");
 divFiltres.classList.add("filtres");
 //Attachement de la div à la section avant la gallery
 divGallery.insertAdjacentElement("beforebegin", divFiltres);
-//Création et attachement des boutons
+//Création et attachement du bouton "Tous"
 const boutonTous = document.createElement("button");
-boutonTous.classList.add("btn-filtrer");
+boutonTous.classList.add("btn-tous");
 boutonTous.innerText = "Tous";
 divFiltres.appendChild(boutonTous);
-const boutonObjets = document.createElement("button");
-boutonObjets.classList.add("btn-filtrer");
-boutonObjets.innerText = "Objets";
-divFiltres.appendChild(boutonObjets);
-const boutonAppart = document.createElement("button");
-boutonAppart.classList.add("btn-filtrer");
-boutonAppart.innerText = "Appartements";
-divFiltres.appendChild(boutonAppart);
-const boutonHotels = document.createElement("button");
-boutonHotels.classList.add("btn-filtrer");
-boutonHotels.innerText = "Hotels & Restaurants";
-divFiltres.appendChild(boutonHotels);
-
-
-//Création des évènements suite aux cliques sur les diférents bouton et génération des pages filtrées
 boutonTous.addEventListener("click", function () {
     divGallery.innerHTML = "";
     genererFigure(works);
 })
-
-boutonObjets.addEventListener("click", function () {
-    const worksFiltres = works.filter(work => work.categoryId === 1);
-    divGallery.innerHTML = "";
-    genererFigure(worksFiltres);
-})
-
-boutonAppart.addEventListener("click", function () {
-    const worksFiltres = works.filter(work => work.categoryId === 2);
-    divGallery.innerHTML = "";
-    genererFigure(worksFiltres);
-})
-
-boutonHotels.addEventListener("click", function () {
-    const worksFiltres = works.filter(work => work.categoryId === 3);
-    divGallery.innerHTML = "";
-    genererFigure(worksFiltres);
-})
+//Création d'une fonction pour générer les boutons de filtre via l'api
+function genereBoutonFiltre() {
+    categories.forEach((category) => {
+        const bouton = document.createElement("button");
+        bouton.classList.add("btn-filtrer");
+        bouton.innerText = category.name;
+        divFiltres.appendChild(bouton);
+        bouton.addEventListener("click", function () {
+            const worksFiltres = works.filter(work => work.categoryId === category.id);
+            divGallery.innerHTML = "";
+            genererFigure(worksFiltres);
+        })
+    })
+}
+//Appel de la fonction
+genereBoutonFiltre();
 
 
 // Création de l'évènement qui emmènera sur la page de connexion au moment du clique sur le le "login" de la barre de navigation.
@@ -91,28 +75,14 @@ if (token) {
         localStorage.removeItem("userToken"); 
     })
     //On vire les boutons de filtres comme sur le figma
-    divFiltres.innerHTML = "";
-    //On créé le bandeau noir pour bien in diquer le mode admin
+    divFiltres.style.display = "none";
+    //On créé le bandeau noir pour bien indiquer le mode admin
     const divEdition = document.createElement("div");
     divEdition.classList.add("mode-edition");
     const header = document.querySelector("header");
     header.insertAdjacentElement("beforebegin", divEdition);
     divEdition.innerHTML = "<i class='fa-regular fa-pen-to-square'></i> Mode édtion";
-    //Création du lien vers la modale
-    const sectionPortfolio = document.getElementById("portfolio");
-    const titreProjet = document.querySelector("#portfolio h2");
-    const divEntete = document.createElement("div");
-    divEntete.classList.add("entete");
-    sectionPortfolio.insertBefore(divEntete, titreProjet);
-    divEntete.appendChild(titreProjet);
-    const lienModale = document.createElement("a")
-    lienModale.href = "#";
-    lienModale.innerHTML = "<i class='fa-regular fa-pen-to-square'></i> Modifier"
-    divEntete.appendChild(lienModale)
-    lienModale.addEventListener("click", (event) => {
-        event.preventDefault;
-        console.log("Modale ouverte");
-    })
+    
 } else {
     console.log("Utilisateur non connecté, mode visiteur.");
 }
