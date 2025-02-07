@@ -54,6 +54,10 @@ body {
 	font-size: 14px;
 }
 
+button:hover {
+	cursor: pointer;
+}
+
 /**Création du bandeau noir signifiant le mod édition**/
 .mode-edition {
 	text-align: center;
@@ -261,6 +265,7 @@ input[type="submit"]{
 }
 
 .contenu-modal {
+	padding: 30px;
 	background-color: #fffef8;
 	width: 550px;
 	height: 650px;
@@ -268,6 +273,75 @@ input[type="submit"]{
 	max-height: calc(100vh - 20px);
 	border-radius: 10px;
 }
+
+.contenu-modal h3 {
+	text-align: center;
+	margin-top: 20px;
+	font-size: 28px;
+}
+
+.div-btn-fermer {
+	display: flex;
+	justify-content: end;
+}
+
+.btn-fermer {
+	border: none;
+	background-color: #fffef8;
+	font-size: 20px;
+}
+
+.gallery-modal {
+	align-items: center;
+	padding: 10%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 30px;
+}
+
+.gallery-modal figure {
+	display: flex;
+	justify-content: end;
+}
+
+.gallery-modal img {
+	width: 100%;
+	position: relative;
+}
+
+.delete-works {
+	position: absolute;
+	border: none;
+	color: white;
+	background-color: black;
+	margin: 5px;
+	padding: 0px 3px 2px 2px;
+}
+
+.fa-trash-can {
+	font-size: 10px;
+}
+
+.bouton-modal {
+	text-align: center;
+	margin: 0 10%;
+	padding: 6%;
+	border-top: 1px solid #1D6154;
+}
+
+.btn-ajouter {
+	background-color: #1D6154;
+	padding: 8px 25px;
+	border: 1px solid #1D6154;
+	border-radius: 20px;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: lighter;
+	color: white;
+}
+
+
 
 footer nav ul {
 	display: flex;
