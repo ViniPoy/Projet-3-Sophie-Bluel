@@ -280,12 +280,11 @@ input[type="submit"]{
 	font-size: 28px;
 }
 
-.div-btn-fermer {
+.div-btn-entete {
 	display: flex;
-	justify-content: end;
 }
 
-.btn-fermer {
+.btn-entete-modal {
 	border: none;
 	background-color: #fffef8;
 	font-size: 20px;
@@ -321,16 +320,18 @@ input[type="submit"]{
 
 .fa-trash-can {
 	font-size: 10px;
+	padding-left: 1px;
 }
 
 .bouton-modal {
 	text-align: center;
 	margin: 0 10%;
 	padding: 6%;
-	border-top: 1px solid #1D6154;
+	border-top: 1px solid #b3b3b3;
 }
 
 .btn-ajouter {
+	width: 60%;
 	background-color: #1D6154;
 	padding: 8px 25px;
 	border: 1px solid #1D6154;
@@ -341,7 +342,71 @@ input[type="submit"]{
 	color: white;
 }
 
+.contenu-modal form {
+	margin: 40px 70px;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
 
+.ajout-photo {
+	background-color: #e8f1f6;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 20px;
+	border-radius: 5px;
+}
+
+.fa-image {
+	color: #CBD6DC;
+	font-size: 70px;
+}
+
+.ajout-photo button {
+	border: none;
+	border-radius: 20px;
+	background-color: #CBD6DC;
+	padding: 10px 20px;
+	color: #306685;
+}
+
+.ajout-photo p {
+	color: #444444;
+	font-size: 10px;
+}
+
+.contenu-modal label{
+	font-size: 17px;
+}
+
+.contenu-modal input{
+	margin-top: 10px;
+	width: 100%;
+	height: 50px;
+	border: none;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+
+} .contenu-modal select{
+	margin-top: 10px;
+	width: 100%;
+	height: 50px;
+	border: none;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-valider {
+	width: 60%;
+	background-color: #a7a7a7;
+	padding: 8px 25px;
+	border: 1px solid #a7a7a7;
+	border-radius: 20px;
+	font-family: 'Syne';
+	font-size: 14px;
+	font-weight: lighter;
+	color: white;
+}
 
 footer nav ul {
 	display: flex;
