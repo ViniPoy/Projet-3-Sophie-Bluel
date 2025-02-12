@@ -1,3 +1,5 @@
+import { chargerCategories, supprimerTravail, envoyerTravail, } from "./fonction-api.js";
+
 const reponseWorks = await fetch("http://localhost:5678/api/works");
 const works = await reponseWorks.json();
 
@@ -55,7 +57,6 @@ if (token) {
     infoPhoto.innerText = "jpg, png : 4mo max";
     const titreForm = document.createElement("p");
     titreForm.innerHTML = '<label for="titre">Titre</label><br><input type="text" name="titre" id="titre">'
-    
     const categorieForm = document.createElement("p");
     categorieForm.innerHTML = '<label for="categorie">Catégorie</label><br><select name="categorie" id="categorie"></select>'
     
@@ -97,42 +98,14 @@ if (token) {
         contenuModal.appendChild(divGallerie);
         contenuModal.appendChild(divBoutonAjouter);
         divBoutonAjouter.appendChild(boutonAjouter);
+        genererFigureModal(works);
     }
 
     //Changement de "page" de la modal au clique sur le bouton ajouter une photo.
     boutonAjouter.addEventListener("click", () => {
         genererModal2();
     })
-
-    async function chargerCategories() {
-        try {
-            const reponse = await fetch("http://localhost:5678/api/categories");
-            if (!reponse.ok) {
-                throw new Error ("Erreur lors du chargement des catégories")
-            }
-            const categories = await reponse.json();
-            remplirSelectCategories(categories);
-        } catch (error) {
-            console.error("Erreur réseau :", error);
-        }
-    }
-    
-    function remplirSelectCategories(categories) {
-        const selectCategorie = document.getElementById("categorie");
-        selectCategorie.innerHTML = "";
-        const optionParDefaut = document.createElement("option");
-        optionParDefaut.value = "";
-        optionParDefaut.disabled = true;
-        optionParDefaut.selected = true;
-        selectCategorie.appendChild(optionParDefaut);
-        categories.forEach(categorie => {
-            const option = document.createElement("option");
-            option.value = categorie.id;
-            option.textContent = categorie.name;
-            selectCategorie.appendChild(option);
-        })
-    }
-        
+     
     function genererModal2 () {
         contenuModal.innerHTML = "";
         divBoutonFermer.innerHTML = "";
@@ -175,44 +148,12 @@ if (token) {
             inputFile.value = "";
         }
     })
-    boutonValider.addEventListener("click", async (event) => {
+    boutonValider.addEventListener("click", (event) => {
         event.preventDefault();
-        const inputTitre = document.getElementById("titre");
-        console.log(inputTitre);
-        const inputCategorie = document.getElementById("categorie");
-        console.log(inputCategorie);
-        const titre = inputTitre.value.trim();
-        const categorie = inputCategorie.value;
-        const image = inputFile.files[0];
-        if (!titre || !categorie || !image) {
-            afficherMessage("Veuillez remplir tout les champs et ajouter une image");
-            return;
-        }
-        const formData = new FormData();
-        formData.append("title", titre);
-        formData.append("category", categorie);
-        formData.append("image", image);
-        try {
-            const response = await fetch("http://localhost:5678/api/works", {
-                method: "POST",
-                headers: {
-                    "Authorization" : `Bearer ${token}`
-                },
-                body: formData
-            })
-            if (response.ok) {
-                const nouveauTravail = await response.json();
-                console.log("Travail ajouté :", nouveauTravail);
-                genererModal2();
-                afficherMessage("Travail ajouté avec succès!");
-            } else {
-                afficherMessage("Erreur lors de l'ajout du travail");
-            }
-        } catch (error) {
-            console.error("Erreur réseau :", error);
-        }
+        envoyerTravail(inputFile, afficherMessage);
     })
 
+    
     function afficherMessage(message){
         const messageErreur = document.createElement("div");
         messageErreur.textContent = message;
@@ -222,31 +163,9 @@ if (token) {
         formAjout.appendChild(messageErreur);
         setTimeout(() => messageErreur.remove(), 3000);
     }
-    
-    async function supprimerTravail(id) {
-        try {
-            const response = await fetch (`http://localhost:5678/api/works/${id}`, {
-                method: "DELETE",
-                headers: { 
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }  
-            })
-            if (response.ok) {
-                const pageElement = document.getElementById(`work-${id}`);
-                if (pageElement) pageElement.remove();
-                const modalElement = document.getElementById(`modal-${id}`);
-                if (modalElement) modalElement.remove();
-                console.log(`Travail ${id} supprimé avec succès.`);
-            } else {
-                console.error(`Erreur lors de la suppression`)
-            }
-        } catch (error) {
-            console.error("Erreur réseau :", error);
-        }
-    }
 
     function genererFigureModal(works) {
+        divGallerie.innerHTML = "";
         //Création et ajout de chaque <figure> dans la <div class="gallery-modal">
         works.forEach((figureModal) => {
             const figureModalElement = document.createElement("figure");
@@ -266,29 +185,19 @@ if (token) {
             figureModalElement.appendChild(logoElement);
         });
     } 
-    genererFigureModal(works);
     
-    
+    boutonFermer.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (modal.style.display !== "none") {
+            modal.style.display = "none";
+            console.log("modale fermé via le bouton fermer")
+        }
+    })
+    window.addEventListener("click", (event) => {
+        if (event.target === modal && modal.style.display !== "none") {
+            modal.style.display = "none";
+            console.log("modale fermée via l'extérieur");
+        }
+    });
 
-    //Création de la fonction pour fermer la modal
-    function fermerModal() {
-        //avec le bouton de fermeture
-        boutonFermer.addEventListener("click", (event) => {
-            event.preventDefault();
-            if (modal.style.display !== "none") {
-                modal.style.display = "none";
-                console.log("modale fermé via le bouton fermer")
-            }
-        })
-        //En cliquent en dehors de la modal
-        window.addEventListener("click", (event) => {
-            //On vérifie si le clic est en dehors de .contenu-modal
-            if (event.target === modal && modal.style.display !== "none") { 
-                modal.style.display = "none";
-                console.log("modale fermée via l'extérieur");
-            }
-        });
-        
-    }
-    fermerModal();   
 }
