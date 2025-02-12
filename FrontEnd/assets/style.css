@@ -309,7 +309,7 @@ input[type="submit"]{
 	position: relative;
 }
 
-.delete-works {
+.btn-suppr {
 	position: absolute;
 	border: none;
 	color: white;
@@ -355,13 +355,13 @@ input[type="submit"]{
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
-	padding: 20px;
 	border-radius: 5px;
 }
 
 .fa-image {
 	color: #CBD6DC;
 	font-size: 70px;
+	margin-top: 20px;
 }
 
 .ajout-photo button {
@@ -375,6 +375,7 @@ input[type="submit"]{
 .ajout-photo p {
 	color: #444444;
 	font-size: 10px;
+	margin-bottom: 20px;
 }
 
 .contenu-modal label{
@@ -406,6 +407,11 @@ input[type="submit"]{
 	font-size: 14px;
 	font-weight: lighter;
 	color: white;
+}
+
+.btn-valider.focus {
+	background-color: #1D6154;
+	border: 1px solid #1D6154;
 }
 
 footer nav ul {
