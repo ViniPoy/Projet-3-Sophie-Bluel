@@ -87,3 +87,37 @@ export async function envoyerTravail(inputFile, afficherMessage) {
         console.error("Erreur réseau :", error);
     }
 }
+
+
+export function afficherMessage(message, formAjout){
+    const messageErreur = document.createElement("div");
+    messageErreur.textContent = message;
+    messageErreur.style.color = "red";
+    messageErreur.style.fontWeight = "bold";
+    messageErreur.style.marginTop = "10px";
+    formAjout.appendChild(messageErreur);
+    setTimeout(() => messageErreur.remove(), 3000);
+}
+
+
+export function genererFigureModal(works, divGallerie) {
+    divGallerie.innerHTML = "";
+    //Création et ajout de chaque <figure> dans la <div class="gallery-modal">
+    works.forEach((figureModal) => {
+        const figureModalElement = document.createElement("figure");
+        figureModalElement.id = `modal-${figureModal.id}`;
+        const imageElement = document.createElement("img");
+        imageElement.src = figureModal.imageUrl;
+        const logoElement = document.createElement("button");
+        logoElement.classList.add("btn-suppr");
+        logoElement.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
+        logoElement.addEventListener("click", () => {
+            console.log("Jai cliqué sur la petite poubelle");
+            supprimerTravail(figureModal.id);
+        })
+        //Rattachement des éléments
+        divGallerie.appendChild(figureModalElement);
+        figureModalElement.appendChild(imageElement);
+        figureModalElement.appendChild(logoElement);
+    });
+} 

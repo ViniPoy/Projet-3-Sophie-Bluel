@@ -1,4 +1,4 @@
-import { chargerCategories, supprimerTravail, envoyerTravail, } from "./fonction-api.js";
+import { chargerCategories, genererFigureModal, envoyerTravail, afficherMessage } from "./fonction-api.js";
 
 const reponseWorks = await fetch("http://localhost:5678/api/works");
 const works = await reponseWorks.json();
@@ -98,7 +98,7 @@ if (token) {
         contenuModal.appendChild(divGallerie);
         contenuModal.appendChild(divBoutonAjouter);
         divBoutonAjouter.appendChild(boutonAjouter);
-        genererFigureModal(works);
+        genererFigureModal(works, divGallerie);
     }
 
     //Changement de "page" de la modal au clique sur le bouton ajouter une photo.
@@ -150,41 +150,8 @@ if (token) {
     })
     boutonValider.addEventListener("click", (event) => {
         event.preventDefault();
-        envoyerTravail(inputFile, afficherMessage);
+        envoyerTravail(inputFile, (message) => afficherMessage(message, formAjout));
     })
-
-    
-    function afficherMessage(message){
-        const messageErreur = document.createElement("div");
-        messageErreur.textContent = message;
-        messageErreur.style.color = "red";
-        messageErreur.style.fontWeight = "bold";
-        messageErreur.style.marginTop = "10px";
-        formAjout.appendChild(messageErreur);
-        setTimeout(() => messageErreur.remove(), 3000);
-    }
-
-    function genererFigureModal(works) {
-        divGallerie.innerHTML = "";
-        //Création et ajout de chaque <figure> dans la <div class="gallery-modal">
-        works.forEach((figureModal) => {
-            const figureModalElement = document.createElement("figure");
-            figureModalElement.id = `modal-${figureModal.id}`;
-            const imageElement = document.createElement("img");
-            imageElement.src = figureModal.imageUrl;
-            const logoElement = document.createElement("button");
-            logoElement.classList.add("btn-suppr");
-            logoElement.innerHTML = '<i class="fa-solid fa-trash-can"></i>'
-            logoElement.addEventListener("click", () => {
-                console.log("Jai cliqué sur la petite poubelle");
-                supprimerTravail(figureModal.id);
-            })
-            //Rattachement des éléments
-            divGallerie.appendChild(figureModalElement);
-            figureModalElement.appendChild(imageElement);
-            figureModalElement.appendChild(logoElement);
-        });
-    } 
     
     boutonFermer.addEventListener("click", (event) => {
         event.preventDefault();
