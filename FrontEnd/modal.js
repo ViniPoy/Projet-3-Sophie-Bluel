@@ -150,7 +150,7 @@ if (token) {
     })
     boutonValider.addEventListener("click", (event) => {
         event.preventDefault();
-        envoyerTravail(inputFile, (message) => afficherMessage(message, formAjout));
+        envoyerTravail(inputFile, (message) => afficherMessage(message));
     })
     
     boutonFermer.addEventListener("click", (event) => {

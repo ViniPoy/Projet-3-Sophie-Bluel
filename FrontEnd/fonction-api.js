@@ -44,6 +44,7 @@ export async function supprimerTravail(id) {
             if (pageElement) pageElement.remove();
             const modalElement = document.getElementById(`modal-${id}`);
             if (modalElement) modalElement.remove();
+            afficherMessage("Travail supprimé avec succès!")
             console.log(`Travail ${id} supprimé avec succès.`);
         } else {
             console.error(`Erreur lors de la suppression`)
@@ -79,7 +80,7 @@ export async function envoyerTravail(inputFile, afficherMessage) {
             const nouveauTravail = await response.json();
             console.log("Travail ajouté :", nouveauTravail);
             genererModal2();
-            afficherMessage("Travail ajouté avec succès!");
+            afficherMessage("Travail ajouté avec succès! Veuiilez recharger la page");
         } else {
             afficherMessage("Erreur lors de l'ajout du travail");
         }
@@ -88,17 +89,20 @@ export async function envoyerTravail(inputFile, afficherMessage) {
     }
 }
 
-
-export function afficherMessage(message, formAjout){
-    const messageErreur = document.createElement("div");
-    messageErreur.textContent = message;
-    messageErreur.style.color = "red";
-    messageErreur.style.fontWeight = "bold";
-    messageErreur.style.marginTop = "10px";
-    formAjout.appendChild(messageErreur);
-    setTimeout(() => messageErreur.remove(), 3000);
+export function afficherMessage(message){
+   const overlay = document.createElement("div");
+   overlay.classList.add("overlay");
+   const boiteMessage = document.createElement("div");
+   boiteMessage.classList.add("boite-message");
+   boiteMessage.textContent = message;
+   const boutonOK = document.createElement("button");
+   boutonOK.textContent = "OK";
+   boutonOK.classList.add("bouton-ok");
+   boutonOK.addEventListener("click", () => overlay.remove());
+   boiteMessage.appendChild(boutonOK);
+   overlay.appendChild(boiteMessage);
+   document.body.appendChild(overlay)
 }
-
 
 export function genererFigureModal(works, divGallerie) {
     divGallerie.innerHTML = "";
