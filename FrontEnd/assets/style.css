@@ -175,7 +175,7 @@ li:hover {
 	gap: 15px;
 }
 
-.filtres button {
+.btn-filtrer {
 	background-color: white;
 	padding: 5px 10px;
 	border: 1px solid #1D6154;
@@ -186,12 +186,12 @@ li:hover {
 	min-width: 100px;
 }
 
-.filtres button:hover {
-	background-color: #1D6154;
-	color: white;
+.btn-active {
+	background-color: #1D6154 !important;
+	color: white !important;
 }
 
-.filtres button:focus {
+.btn-filtrer:hover {
 	background-color: #1D6154;
 	color: white;
 }
@@ -282,6 +282,11 @@ input[type="submit"]{
 
 .div-btn-entete {
 	display: flex;
+	justify-content: flex-end;
+}
+
+.element-space-between {
+	justify-content: space-between !important;
 }
 
 .btn-entete-modal {

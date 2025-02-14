@@ -1,7 +1,17 @@
+async function getWorks() {
+    const reponseWorks = await fetch("http://localhost:5678/api/works");
+    const works = await reponseWorks.json();
+    return works;
+}
 
-const token = localStorage.getItem("userToken")
+async function getCategories() {
+    const reponseCategories = await fetch("http://localhost:5678/api/categories");
+    const categories = await reponseCategories.json();
+    return categories;
+}
 
-export async function chargerCategories() {
+
+async function chargerCategories() {
     try {
         const reponse = await fetch("http://localhost:5678/api/categories");
         if (!reponse.ok) {
@@ -30,7 +40,7 @@ function remplirSelectCategories(categories) {
     })
 }
 
-export async function supprimerTravail(id) {
+async function supprimerTravail(id) {
     try {
         const response = await fetch (`http://localhost:5678/api/works/${id}`, {
             method: "DELETE",
@@ -54,7 +64,7 @@ export async function supprimerTravail(id) {
     }
 }
 
-export async function envoyerTravail(inputFile, afficherMessage) {
+async function envoyerTravail(inputFile, afficherMessage) {
     const inputTitre = document.getElementById("titre");
     const inputCategorie = document.getElementById("categorie");
     const titre = inputTitre.value.trim();
@@ -79,8 +89,8 @@ export async function envoyerTravail(inputFile, afficherMessage) {
         if (response.ok) {
             const nouveauTravail = await response.json();
             console.log("Travail ajouté :", nouveauTravail);
-            genererModal2();
-            afficherMessage("Travail ajouté avec succès! Veuiilez recharger la page");
+            //genererGallerieModal();
+            //ajoutWorks(nouveauTravail)
         } else {
             afficherMessage("Erreur lors de l'ajout du travail");
         }
@@ -89,7 +99,7 @@ export async function envoyerTravail(inputFile, afficherMessage) {
     }
 }
 
-export function afficherMessage(message){
+function afficherMessage(message){
    const overlay = document.createElement("div");
    overlay.classList.add("overlay");
    const boiteMessage = document.createElement("div");
@@ -104,8 +114,10 @@ export function afficherMessage(message){
    document.body.appendChild(overlay)
 }
 
-export function genererFigureModal(works, divGallerie) {
+async function genererFigureModal(divGallerie) {
     divGallerie.innerHTML = "";
+    const reponseWorks = await fetch("http://localhost:5678/api/works");
+    const works = await reponseWorks.json();
     //Création et ajout de chaque <figure> dans la <div class="gallery-modal">
     works.forEach((figureModal) => {
         const figureModalElement = document.createElement("figure");

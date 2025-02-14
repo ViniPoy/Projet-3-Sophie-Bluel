@@ -14,9 +14,11 @@
             integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<!-- Ajout du script avec la notion defer pour qu'il s'éxecute après le chargement du html -->
-		 <script type="module" src="script.js" defer></script>
-		 <script type="module" src="modal.js" defer></script>
-	</head>
+		<script src="fonction-api.js" defer></script>
+		<script src="modal.js" defer></script>
+		<script src="user.js" defer></script>
+		<script src="script.js" defer></script>
+	</head> 	 
 	<body>
 		<header>
 			<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -43,8 +45,8 @@
 			</section>
 			<section id="portfolio">
 				<h2>Mes Projets</h2>
-				<div class="gallery">
-				</div>
+				<div class="filtres"></div>
+				<div class="gallery"></div>
 			</section>
 			<section id="contact">
 				<h2>Contact</h2>

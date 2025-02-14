@@ -1,48 +1,63 @@
-import { chargerCategories, genererFigureModal, envoyerTravail, afficherMessage } from "./fonction-api.js";
+const contenuModal = document.querySelector(".contenu-modal");
+const modal = document.getElementById("modal");
 
-const reponseWorks = await fetch("http://localhost:5678/api/works");
-const works = await reponseWorks.json();
-
-const token = localStorage.getItem("userToken");
-
-if (token) {
-    //Création du lien vers la modale
-    const sectionPortfolio = document.getElementById("portfolio");
-    const titreProjet = document.querySelector("#portfolio h2");
-    const divEntete = document.createElement("div");
-    divEntete.classList.add("entete");
-    sectionPortfolio.insertBefore(divEntete, titreProjet);
-    divEntete.appendChild(titreProjet);
-    const lienModale = document.createElement("a")
-    lienModale.href = "#";
-    lienModale.innerHTML = "<i class='fa-regular fa-pen-to-square'></i> Modifier"
-    divEntete.appendChild(lienModale)
-    lienModale.addEventListener("click", (event) => {
-        event.preventDefault();
-        ouvrirModal();
-    })
-
-    //Création du bouton pour fermer la modal (et du bouton retour pour la deuxième "page" de la modal)
-    const contenuModal = document .querySelector(".contenu-modal");
+window.addEventListener("click", (event) => {
+    if (event.target === modal && modal.style.display !== "none") {
+        modal.style.display = "none";
+        console.log("modale fermée via l'extérieur");
+    }
+});
+    
+function creerEntete(typeModal){
     const divBoutonFermer = document.createElement("div")
     divBoutonFermer.classList.add("div-btn-entete");
-    const boutonFermer = document.createElement("button");
-    const boutonRetour = document.createElement("button");
-    boutonFermer.classList.add("btn-entete-modal");
-    boutonRetour.classList.add("btn-entete-modal");
-    boutonFermer.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-    boutonRetour.innerHTML = '<i class="fa-solid fa-arrow-left"></i>'
+    if (typeModal === "form") {
+        creerBoutonRetour(divBoutonFermer)
+        divBoutonFermer.classList.add("element-space-between")
+    }
+    creerBoutonFermer(divBoutonFermer)
+    contenuModal.appendChild(divBoutonFermer)
+}
 
-    //Création des titres de la modal (page 1 et 2)
+function creerBoutonFermer(divBoutonFermer) {
+    const boutonFermer = document.createElement("button");
+    boutonFermer.classList.add("btn-entete-modal");
+    boutonFermer.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    divBoutonFermer.appendChild(boutonFermer)
+    boutonFermer.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (modal.style.display !== "none") {
+            modal.style.display = "none";
+            console.log("modale fermé via le bouton fermer")
+        }
+    })
+}
+
+function creerBoutonRetour(divBoutonFermer) {
+    const boutonRetour = document.createElement("button");
+    boutonRetour.classList.add("btn-entete-modal");    
+    boutonRetour.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+    boutonRetour.addEventListener("click", () => {
+        genererGallerieModal();
+    })
+    divBoutonFermer.appendChild(boutonRetour)
+}
+
+function genererFormModal() {
+    contenuModal.innerHTML = "";
+
+    creerEntete("form");
+
     const titreModal = document.createElement("h3");
-    
-    //Création d'une div gallery-modal pour la page 1 et d'une d'un formulaire pour la page 2
-    const divGallerie = document.createElement("div");
-    divGallerie.classList.add("gallery-modal");
+    contenuModal.appendChild(titreModal);
+    titreModal.innerText = "Ajout photo";
+
     const formAjout = document.createElement("form");
-    //Création d'une div à part pour intégrer du css et correspondre à la maquette (et de son contenu)
+    contenuModal.appendChild(formAjout);
+
     const divAjoutPhoto = document.createElement("div");
     divAjoutPhoto.classList.add("ajout-photo");
+
     const imageAjoutPhoto = document.createElement("p");
     imageAjoutPhoto.innerHTML = '<i class="fa-regular fa-image"></i>';
     const inputFile = document.createElement("input");
@@ -55,89 +70,33 @@ if (token) {
     boutonAjoutPhoto.setAttribute("for", "upload-photo")
     const infoPhoto = document.createElement("p");
     infoPhoto.innerText = "jpg, png : 4mo max";
+
     const titreForm = document.createElement("p");
     titreForm.innerHTML = '<label for="titre">Titre</label><br><input type="text" name="titre" id="titre">'
     const categorieForm = document.createElement("p");
     categorieForm.innerHTML = '<label for="categorie">Catégorie</label><br><select name="categorie" id="categorie"></select>'
     
-
-    
-    //créationdu bouton de validation d'envoi de projet (page 2)
     const divValider = document.createElement("div");
     divValider.classList.add("bouton-modal");
     const boutonValider = document.createElement("button");
     boutonValider.classList.add("btn-valider");
     boutonValider.innerText = "Valider";
+    boutonValider.type = "submit";
 
-
-    //Création d'une div avec le bouton pour changer l'écran de la modal (page 1)
-    const divBoutonAjouter = document.createElement("div");
-    divBoutonAjouter.classList.add("bouton-modal");
-    const boutonAjouter = document.createElement("button");
-    boutonAjouter.classList.add("btn-ajouter");
-    boutonAjouter.innerText = "Ajouter une photo";
-
-
-
-    const modal = document.getElementById("modal");   
-    //Création de la fonction pour ouvrir la modal
-    function ouvrirModal() {
-        modal.style.display = null;
-        console.log("Modale ouverte");
-        genererModal1();
-    }
-
-    function genererModal1 () {
-        contenuModal.innerHTML = "";
-        divBoutonFermer.innerHTML = "";
-        contenuModal.appendChild(divBoutonFermer);
-        divBoutonFermer.style.justifyContent = "flex-end";
-        divBoutonFermer.appendChild(boutonFermer);
-        contenuModal.appendChild(titreModal);
-        titreModal.innerText = "Gallerie photo";
-        contenuModal.appendChild(divGallerie);
-        contenuModal.appendChild(divBoutonAjouter);
-        divBoutonAjouter.appendChild(boutonAjouter);
-        genererFigureModal(works, divGallerie);
-    }
-
-    //Changement de "page" de la modal au clique sur le bouton ajouter une photo.
-    boutonAjouter.addEventListener("click", () => {
-        genererModal2();
-    })
-     
-    function genererModal2 () {
-        contenuModal.innerHTML = "";
-        divBoutonFermer.innerHTML = "";
-        contenuModal.appendChild(divBoutonFermer);
-        divBoutonFermer.style.justifyContent = "space-between";
-        divBoutonFermer.appendChild(boutonRetour);
-        divBoutonFermer.appendChild(boutonFermer);
-        contenuModal.appendChild(titreModal);
-        titreModal.innerText = "Ajout photo";
-        contenuModal.appendChild(formAjout);
-        formAjout.reset();
-        formAjout.appendChild(divAjoutPhoto);
-        divAjoutPhoto.innerHTML = "";
-        divAjoutPhoto.appendChild(imageAjoutPhoto);
-        divAjoutPhoto.appendChild(boutonAjoutPhoto);
-        divAjoutPhoto.appendChild(inputFile)
-        divAjoutPhoto.appendChild(infoPhoto);
-        formAjout.appendChild(titreForm);
-        formAjout.appendChild(categorieForm);
-        contenuModal.appendChild(divValider);
-        divValider.appendChild(boutonValider);
-        chargerCategories();
-    }    
+    formAjout.reset();
     
-    boutonRetour.addEventListener("click", () => {
-        genererModal1();
-    })
+    divAjoutPhoto.innerHTML = "";
+    divAjoutPhoto.append(imageAjoutPhoto, boutonAjoutPhoto, inputFile, infoPhoto);
+    formAjout.append(divAjoutPhoto, titreForm, categorieForm, divValider);
+    divValider.appendChild(boutonValider);
+
+    chargerCategories();
 
     boutonAjoutPhoto.addEventListener("click", (event) => {
         event.preventDefault();
         inputFile.click();
     })
+
     inputFile.addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (file && file.size <= 4 * 1024 * 1024) {
@@ -147,24 +106,54 @@ if (token) {
             alert("Le fichier est trop volumineux (4 Mo max");
             inputFile.value = "";
         }
+        verifierFormulaire(inputFile, titreInput, categorieSelect, boutonValider)
     })
-    boutonValider.addEventListener("click", (event) => {
+
+    const titreInput = formAjout.querySelector("#titre");
+    const categorieSelect = formAjout.querySelector("#categorie")
+    titreInput.addEventListener("input", () => verifierFormulaire(inputFile, titreInput, categorieSelect, boutonValider));
+    categorieSelect.addEventListener("change", () => verifierFormulaire(inputFile, titreInput, categorieSelect, boutonValider));
+
+    verifierFormulaire(inputFile, titreInput, categorieSelect, boutonValider)
+
+    formAjout.addEventListener("submit", async (event) => {
         event.preventDefault();
         envoyerTravail(inputFile, (message) => afficherMessage(message));
     })
-    
-    boutonFermer.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (modal.style.display !== "none") {
-            modal.style.display = "none";
-            console.log("modale fermé via le bouton fermer")
-        }
-    })
-    window.addEventListener("click", (event) => {
-        if (event.target === modal && modal.style.display !== "none") {
-            modal.style.display = "none";
-            console.log("modale fermée via l'extérieur");
-        }
-    });
+}
 
+function genererGallerieModal () {
+    contenuModal.innerHTML = "";
+    creerEntete("liste");
+    const titreModal = document.createElement("h3");
+    contenuModal.appendChild(titreModal);
+    titreModal.innerText = "Gallerie photo";
+    const divGallerie = document.createElement("div");
+    divGallerie.classList.add("gallery-modal");
+    const divBoutonAjouter = document.createElement("div");
+    divBoutonAjouter.classList.add("bouton-modal");
+    const boutonAjouter = document.createElement("button");
+    boutonAjouter.classList.add("btn-ajouter");
+    boutonAjouter.innerText = "Ajouter une photo";
+    boutonAjouter.addEventListener("click", () => {
+        genererFormModal();
+    })
+    contenuModal.appendChild(divGallerie);
+    contenuModal.appendChild(divBoutonAjouter);
+    divBoutonAjouter.appendChild(boutonAjouter);
+    genererFigureModal(divGallerie);
+}
+
+function ouvrirModal() {
+    modal.style.display = null;
+    console.log("Modale ouverte");
+    genererGallerieModal();
+}
+
+function verifierFormulaire(inputFile, titreInput, categorieSelect, boutonValider) {
+    if (inputFile.files.length > 0 && titreInput.value.trim() !== "" && categorieSelect.value !== "") {
+        boutonValider.classList.add("btn-active")
+    } else {
+        boutonValider.classList.remove("btn-active")
+    }
 }

@@ -1,10 +1,23 @@
 //Récupération du formulaire de connection
 const form = document.querySelector("form");
+//On récupère les valeurs entrées par l'utilisateur
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+//On fait en sorte que le bouton change de couleur quand les input sont remplis
+document.querySelectorAll("#email, #password").forEach(input => {
+    input.addEventListener("input", () => {
+        if (emailInput.value.trim() !== "" && passwordInput.value.trim() !== "") {
+            document.querySelector(".btn-valider").classList.add("btn-active");
+        } else {
+            document.querySelector(".btn-valider").classList.remove("btn-active");
+        }
+    })
+})
+//On écoute le submit du formulaire pour vérifier qu'il n'y ait pas d'erreur.
 form.addEventListener("submit", async (event) => {
     event.preventDefault();//On empêche la page de se recharger à l'évènement submit
-    //On récupère les valeurs entrées par l'utilisateur
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const email = emailInput.value;
+    const password = passwordInput.value
     //On effectue un try/catch: si les données sont bonnes on renvoie sur la page d'accueil en stockant les données en local, autrment on affiche un message d'erreur
     try {
         const reponse = await fetch("http://localhost:5678/api/users/login" , {

@@ -137,18 +137,25 @@ li:hover {
 	margin: 2em 0 1em 0;
 }
 
-input[type="submit"]{
+.btn-valider{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
+	border: 1px solid #a7a7a7;
+	background-color: #a7a7a7;
 	margin : 2em auto ;
+	padding: 15px;
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
 }
 
-input[type="submit"]:hover {
+.btn-active {
+	border: 1px solid #1D6154 !important;
+	background-color: #1D6154 !important;
+}
+
+.btn-valider:hover {
     cursor: pointer;
 }
 
