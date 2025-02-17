@@ -365,11 +365,16 @@ input[type="submit"]{
 
 .fa-image {
 	color: #CBD6DC;
-	font-size: 70px;
+	font-size: 80px;
 	margin-top: 20px;
 }
 
+.ajout-photo p:first-child {
+	margin-bottom: 0;
+}
+
 .ajout-photo button {
+	font-size: 15px;
 	border: none;
 	border-radius: 20px;
 	background-color: #CBD6DC;
@@ -402,6 +407,7 @@ option {
 
 .contenu-modal select{
 	margin-top: 10px;
+	margin-bottom: 20px;
 	width: 100%;
 	height: 50px;
 	border: none;
@@ -454,11 +460,11 @@ footer nav ul {
     font-size: 18px;
     text-align: center;
 	font-family: 'Syne';
-	width: 50%;
+	width: 300px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 5px;
+	gap: 15px;
 }
 
 .bouton-ok {
