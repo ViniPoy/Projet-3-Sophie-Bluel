@@ -25,12 +25,6 @@ function isConneceted() {
     }
 }
 
-function ouvrirModal() {
-    modal.style.display = null;
-    console.log("Modale ouverte");
-    genererGallerieModal();
-}
-
 function linksLogin() {
     const boutonLogin = document.getElementById("login");
     // Si l'utilisateur est connecté:
