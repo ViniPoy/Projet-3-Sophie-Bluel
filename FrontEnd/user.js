@@ -3,6 +3,15 @@ const token = localStorage.getItem("userToken");
 function isConneceted() {
     //L'utilisateur est connecté donc:
     if (token) {
+        //On suppriume les boutons de filtres comme sur le figma
+        divFiltres.style.display = "none";
+        //On créé le bandeau noir pour bien indiquer le mode admin
+        const divEdition = document.createElement("div");
+        divEdition.classList.add("mode-edition");
+        //On attache le bandeau noir au dessus du header
+        const header = document.querySelector("header");
+        header.insertAdjacentElement("beforebegin", divEdition);
+        divEdition.innerHTML = "<i class='fa-regular fa-pen-to-square'></i> Mode édtion";
         //Je récupère la section portfolio, ainsi que le titre a l'intérieur
         const sectionPortfolio = document.getElementById("portfolio");
         const titreProjet = document.querySelector("#portfolio h2");
@@ -35,16 +44,7 @@ function linksLogin() {
         boutonLogin.addEventListener("click", () => {
             window.location.href = "index.html";
             localStorage.removeItem("userToken");
-        })
-        //On suppriume les boutons de filtres comme sur le figma
-        divFiltres.style.display = "none";
-        //On créé le bandeau noir pour bien indiquer le mode admin
-        const divEdition = document.createElement("div");
-        divEdition.classList.add("mode-edition");
-        //On attache le bandeau noir au dessus du header
-        const header = document.querySelector("header");
-        header.insertAdjacentElement("beforebegin", divEdition);
-        divEdition.innerHTML = "<i class='fa-regular fa-pen-to-square'></i> Mode édtion";
+        }) 
     //Sinon:
     } else {
         //Au clique sur le le bouton login, on redirige vers la page de connexion de l'utilisateur

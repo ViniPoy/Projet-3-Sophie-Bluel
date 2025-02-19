@@ -23,7 +23,7 @@ function genererFormModal() {
     const boutonAjoutPhoto = document.createElement("button");
     boutonAjoutPhoto.innerText = "+ Ajouter photo";
     boutonAjoutPhoto.setAttribute("for", "upload-photo")
-    //Quand on clique sur le bouton, cela équivaut aul'activation de l'input de type file
+    //Quand on clique sur le bouton, cela équivaut à l'activation de l'input de type file
     boutonAjoutPhoto.addEventListener("click", (event) => {
         event.preventDefault();
         inputFile.click();
