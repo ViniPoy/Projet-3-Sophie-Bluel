@@ -46,3 +46,21 @@ async function postWorks(donnees) {
         return null
     }
 }
+
+async function postUserId(email, password) {
+    try {
+        const response = await fetch("http://localhost:5678/api/users/login" , {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({email, password}),
+        })
+        if (response.ok) {
+            return await response.json();
+        } else {
+            console.error("Erreur lors de l'envoi :", response.status);
+            return null;
+        }
+    } catch (error) {
+        showError(error.message);
+    }
+}

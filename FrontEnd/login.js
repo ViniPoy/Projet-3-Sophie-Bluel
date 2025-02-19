@@ -18,22 +18,13 @@ form.addEventListener("submit", async (event) => {
     event.preventDefault();//On empêche la page de se recharger à l'évènement submit
     const email = emailInput.value;
     const password = passwordInput.value
-    //On effectue un try/catch: si les données sont bonnes on renvoie sur la page d'accueil en stockant les données en local, autrment on affiche un message d'erreur
-    try {
-        const reponse = await fetch("http://localhost:5678/api/users/login" , {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({email, password}),
-        })
-        const data = await reponse.json();
-        if (!reponse.ok) {
-            throw new Error("Erreur dans l'identifiant ou le mot de passe.")
-        }
-        localStorage.setItem("userToken", data.token);
+    const userData = await postUserId(email, password);
+    if (userData) {
+        localStorage.setItem("userToken", userData.token);
         localStorage.setItem("userEmail", email);
         window.location.href="index.html";
-    } catch (error) {
-        showError(error.message);
+    } else {
+        showError("Identifiant ou mot de passe incorrects. Veuillez réessayer.")
     }
 })
 
@@ -42,3 +33,4 @@ function showError(message) {
     const errorDiv = document.getElementById("error-message");
     errorDiv.textContent = message;
 }
+        
