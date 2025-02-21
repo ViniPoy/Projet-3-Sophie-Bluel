@@ -62,6 +62,37 @@ function creerTitreModal(titre) {
     contenuModal.appendChild(titreModal);
 }
 
+function creerChampForm(attribut, titre, type) {
+    const form = document.querySelector(".form-ajout");
+    const conteneur = document.createElement("div");
+    //On créé le label, mais on sépare le titre de l'attribut pour pouvoir mettre un titre avec majuscule et accent
+    const label = document.createElement("label");
+    label.setAttribute("for", attribut);
+    label.innerText = titre;
+    //On créé le champ associé au label
+    let champ;
+    if (type === "select") {
+        champ = document.createElement("select");
+    } else {
+        champ = document.createElement("input");
+        champ.type = type;
+    }
+    champ.name = attribut;
+    champ.id = attribut;
+    conteneur.append(label, champ);
+    form.appendChild(conteneur);
+}
+
+function creerFootModal(classe, texte) {
+    const divBouton = document.createElement("div");
+    divBouton.classList.add("bouton-modal");
+    contenuModal.appendChild(divBouton);
+    const bouton = document.createElement("button");
+    bouton.classList.add(classe);
+    bouton.innerText = texte;
+    divBouton.appendChild(bouton);
+}
+
 function afficherMessage(message){
     //On créé une div qui prendra toute la page pour la flouter
     const overlay = document.createElement("div");

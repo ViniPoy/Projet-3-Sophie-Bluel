@@ -7,11 +7,13 @@ isConneceted();
 let works;
 
 getWorks().then((data) => {
-    works = data; //Stock les travaux récupérés
-    genererBoutonFiltre(); //Génération des filtres
-    genererWorksGallerie(works); //Génération de la gallerie
+    //On tock les travaux récupérés
+    works = data;
+    //Génération des filtres
+    genererBoutonFiltre();
+    //Génération de la gallerie
+    genererWorksGallerie(works);
 }).catch(error => console.error("Erreur lors de la récupération des travaux :", error));
-
 
 
 //Création d'une fonction pour générer les éléments dans .gallery
@@ -39,7 +41,7 @@ function ajoutWorks(figure) {
 }
 
 function creerBoutonTous() {
-    //On attribue l'id 0 au bouton tous pour qu'il soit en premier sur la page (à gauche)
+    //On attribue l'id 0 au bouton tous pour assurer le bon fonctionnement du script (impossible de programmer un id 0 sur l'api)
     let category = { name: "Tous", id: "0" };
     const boutonTous = creerBouton(category);
     //On ajoute une classe qui permet de simuler un focus au chargement de la page

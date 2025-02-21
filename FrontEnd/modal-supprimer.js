@@ -10,18 +10,15 @@ function genererGallerieModal () {
     contenuModal.appendChild(divGallerie);
     //On génère les travaux
     genererFigureModal(divGallerie);
-    //On créé une div avec un bouton qui permet d'afficher le formulaire d'ajout de travaux
-    const divBoutonAjouter = document.createElement("div");
-    divBoutonAjouter.classList.add("bouton-modal");
-    contenuModal.appendChild(divBoutonAjouter);
-    const boutonAjouter = document.createElement("button");
-    boutonAjouter.classList.add("btn-ajouter");
-    boutonAjouter.innerText = "Ajouter une photo";
+    //On ajoute le bouton pour changer de page
+    creerFootModal("btn-ajouter", "Ajouter une photo");
+    const boutonAjouter = document.querySelector(".btn-ajouter");
     boutonAjouter.addEventListener("click", () => {
         genererFormModal();
     })
-    divBoutonAjouter.appendChild(boutonAjouter);
 }
+
+
 
 async function genererFigureModal(divGallerie) {
     divGallerie.innerHTML = "";

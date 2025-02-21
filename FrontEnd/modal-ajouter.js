@@ -6,6 +6,7 @@ function genererFormModal() {
     creerTitreModal("Ajout Photo");
     //On créé un formulaire 
     const formAjout = document.createElement("form");
+    formAjout.classList.add("form-ajout");
     contenuModal.appendChild(formAjout);
     //On créé une div stylisée qui sert à ajouter une foto via un input
     const divAjoutPhoto = document.createElement("div");
@@ -48,23 +49,12 @@ function genererFormModal() {
     infoPhoto.innerText = "jpg, png : 4mo max";
     //Enfin on rattache tout ça a la div qu'on a créée pour
     divAjoutPhoto.append(imageAjoutPhoto, boutonAjoutPhoto, inputFile, infoPhoto);
-    //On créé un input pour le titre et un select pour la catégorie que l'on veut associé à la photo 
-    const titreForm = document.createElement("p");
-    titreForm.innerHTML = '<label for="titre">Titre</label><br><input type="text" name="titre" id="titre">'
-    const categorieForm = document.createElement("p");
-    categorieForm.innerHTML = '<label for="categorie">Catégorie</label><br><select name="categorie" id="categorie"></select>'
-    //On rempli les options du select categorie
+    formAjout.appendChild(divAjoutPhoto);
+    creerChampForm("titre", "Titre", "text");
+    creerChampForm("categorie", "Catégorie", "select");
     remplirSelectCategories();
-    //On créé une div avec le bouton qui permet l'ajout du travail (photo, titre, catégorie) à l'api
-    const divValider = document.createElement("div");
-    divValider.classList.add("bouton-modal");
-    const boutonValider = document.createElement("button");
-    boutonValider.classList.add("btn-valider");
-    boutonValider.innerText = "Valider";
-    divValider.appendChild(boutonValider);
-    //Enfin on rattache tout les éléments du formulaire au formulaire créé en amont
-    formAjout.append(divAjoutPhoto, titreForm, categorieForm, divValider);
-
+    creerFootModal("btn-valider", "Valider");
+    
     //On récupère la valeur de l'input titre et du select categorie pour vérifier qu'ils sont remplis
     const titreInput = formAjout.querySelector("#titre");
     const categorieSelect = formAjout.querySelector("#categorie")
@@ -72,6 +62,7 @@ function genererFormModal() {
     categorieSelect.addEventListener("change", () => verifierFormulaire(inputFile, titreInput, categorieSelect, boutonValider));
 
     //Au clique sur le bouton valider, on appelle la fonction qui gère l'envoie de travaux
+    const boutonValider = document.querySelector(".btn-valider");
     boutonValider.addEventListener("click", async (event) => {
         event.preventDefault();
         envoyerTravail(inputFile, (message) => afficherMessage(message));
